@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse
 from models.user import UserModel
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import jwt_required
 
 minha_requisicao = reqparse.RequestParser()
 minha_requisicao.add_argument('login', type=str, required=True, help="login is required")
@@ -8,26 +8,28 @@ minha_requisicao.add_argument('password', type=str, required=True, help="passwor
 
 class User(Resource):
 
-    def get(self, user_id):
-        user = UserModel.find_user_by_id(user_id)
+    @jwt_required()
+    def get(self, id_user):
+        user = UserModel.find_user_by_id(id_user)
         if user: 
             return user.json()
         return {'message':'user not found'}, 200 # or 204
 
-    def delete(self, user_id):
-        user = UserModel.find_user_by_id(user_id)
+    @jwt_required()
+    def delete(self, id_user):
+        user = UserModel.find_user_by_id(id_user)
         if user:
             user.delete_user()
             return {'message' : 'user deleted.'}
         return {'message' : 'user not founded'}, 204
 
-    def post(self, user_id):
+    def post(self, id_user):
         dados = minha_requisicao.parse_args()
-        if UserModel.find_user_by_login(dados['login']):
-            return {'message':'Login {} already exists'.format(dados['login'])}, 200
+        if UserModel.find_user_by_login(dados['ds_login']):
+            return {'message':'Login {} already exists'.format(dados['ds_login'])}, 200
 
-        user_id = UserModel.find_last_user()
-        new_user = UserModel(user_id, **dados)
+        id_user = UserModel.find_last_user()
+        new_user = UserModel(id_user, **dados)
         
         try:
             print(new_user.json())
@@ -44,7 +46,7 @@ class UserLogin(Resource):
         dados = minha_requisicao.parse_args()
         user = UserModel.find_user_by_login(dados['login'])
 
-        if user and user.password == dados['password']:
-            token_acesso = create_access_token(identity=user.user_id)
+        if user and user.ds_password == dados['password']:
+            token_acesso = create_access_token(identity=user.id_user)
             return {'access_token': token_acesso}, 200
         return {'message': 'User or password is not correct.'}
