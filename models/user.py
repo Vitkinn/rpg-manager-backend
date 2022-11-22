@@ -1,36 +1,39 @@
 from sql_alchemy import database
 from sqlalchemy.sql.expression import func
+from datetime import date
 
 class UserModel (database.Model):
 
     __tablename__ = 'user'
     id_user = database.Column(database.Integer, primary_key = True)
-    ie_type = database.Column(database.String(1))
-    ds_avatar = database.Column(database.String(50))
-    ds_email = database.Column(database.String(100))
-    ds_login = database.Column(database.String(50))
-    ds_name = database.Column(database.String(100))
+    ie_type = database.Column(database.Integer)
+    ds_avatar = database.Column(database.String(255))
+    ds_email = database.Column(database.String(255))
+    ds_name = database.Column(database.String(255))
     ds_password = database.Column(database.String(50))
     dt_creation = database.Column(database.Date)
     dt_update = database.Column(database.Date)
-    nr_contact = database.Column(database.String(13))
+    nm_user = database.Column(database.String(50))
+    nr_contact = database.Column(database.Integer)
 
-    def __init__(self, id_user, ie_type, ds_avatar, ds_email, ds_login, ds_name,
-                 ds_password, dt_creation, dt_update, nr_contact):
+    def __init__(self, id_user, ds_email, nm_user, ds_name,
+                 ds_password, nr_contact):
         self.id_user = id_user
-        self.ie_type = ie_type
-        ##self.ds_avatar = ds_avatar
+        self.ie_type = 1
+        self.ds_avatar = "C:"
         self.ds_email = ds_email
-        self.ds_login = ds_login
         self.ds_name = ds_name
         self.ds_password = ds_password
-        self.dt_creation = dt_creation
-        self.dt_update = dt_update
+        self.dt_creation = date.today()
+        self.dt_update = date.today()
         self.nr_contact = nr_contact
+        self.nm_user = nm_user
 
     def json(self):
-        return {'id_user' : self.id_user,
-        'login' : self.ds_login}
+        return {
+            'id_user' : self.id_user,
+            'nm_user' : self.nm_user
+            }
 
     @classmethod  
     def find_user_by_id(cls, id_user): 
@@ -40,8 +43,8 @@ class UserModel (database.Model):
         return None
 
     @classmethod  
-    def find_user_by_login(cls, ds_login): 
-        user = cls.query.filter_by(ds_login = ds_login).first()
+    def find_user_by_login(cls, nm_user): 
+        user = cls.query.filter_by(nm_user = nm_user).first()
         if user:
             return user
         return None
@@ -50,9 +53,9 @@ class UserModel (database.Model):
         database.session.add(self)
         database.session.commit()
 
-    def update_user(self, id_user, ds_login, password): 
+    def update_user(self, id_user, nm_user, password): 
         self.id_user = id_user
-        self.ds_login = ds_login
+        self.nm_user = nm_user
         self.password = password
 
     def delete_user(self): 

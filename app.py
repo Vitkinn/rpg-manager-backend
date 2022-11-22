@@ -7,12 +7,12 @@ app = Flask(__name__)
 api = Api(app)
 jwt = JWTManager(app)
 
-# conexão com mysql
-DATABASE_URI = 'mysql+pymysql://root@localhost/rpg?charset=utf8mb4'
+# Conexão com o MySQL
+DATABASE_URI = 'mysql+pymysql://root:admin@localhost/rpg?charset=utf8mb4'
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-#conexão com postgres
+# Conexão com o PostgresSQL
 # DATABASE_URI = 'postgresql+psycopg2://postgres:admin@localhost:5432/dbpython'
 # app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
