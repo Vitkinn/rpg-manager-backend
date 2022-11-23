@@ -1,21 +1,16 @@
 from flask import Flask
 from flask_restful import Api
-from resources.users import User, UserLogin
 from flask_jwt_extended import JWTManager
+
+from resources.users import User, UserLogin
 
 app = Flask(__name__)
 api = Api(app)
 jwt = JWTManager(app)
 
-# Conexão com o MySQL
-DATABASE_URI = 'mysql+pymysql://root:admin@localhost/rpg?charset=utf8mb4'
+DATABASE_URI = 'mysql+pymysql://USER:PASSWORD@localhost/DATABASE_NAME?charset=utf8mb4' # Modify this URL.
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-# Conexão com o PostgresSQL
-# DATABASE_URI = 'postgresql+psycopg2://postgres:admin@localhost:5432/dbpython'
-# app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'Senai2022'
 
 @app.before_first_request

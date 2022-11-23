@@ -35,14 +35,14 @@ class UserModel (database.Model):
             'nm_user' : self.nm_user
             }
 
-    @classmethod  
+    @classmethod
     def find_user_by_id(cls, id_user): 
         user = cls.query.filter_by(id_user = id_user).first()
         if user:
             return user
         return None
 
-    @classmethod  
+    @classmethod
     def find_user_by_login(cls, nm_user): 
         user = cls.query.filter_by(nm_user = nm_user).first()
         if user:
@@ -58,13 +58,12 @@ class UserModel (database.Model):
         self.nm_user = nm_user
         self.password = password
 
-    def delete_user(self): 
+    def delete_user(self):
         database.session.delete(self)
         database.session.commit()
 
     @classmethod
     def find_last_user(cls):
-        # id_user = database.engine.execute("select nextval('id_user') as new_id").fetchone() - postgres
         id_user = database.session.query(func.max(cls.id_user)).one()[0]
 
         if id_user:
