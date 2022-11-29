@@ -16,6 +16,8 @@ class UserModel (database.Model):
     nm_user = database.Column(database.String(50))
     nr_contact = database.Column(database.Integer)
 
+    friends = database.relationship('TableModel', backref='TableModel.id_table', primaryjoin='UserModel.id_user==TableModel.user_id', lazy='dynamic')
+
     def __init__(self, id_user, ds_email, nm_user, ds_name,
                  ds_password, nr_contact):
         self.id_user = id_user
@@ -32,7 +34,15 @@ class UserModel (database.Model):
     def json(self):
         return {
             'id_user' : self.id_user,
-            'nm_user' : self.nm_user
+            'ie_type' : self.ie_type,
+            'ds_avatar' : self.ds_avatar,
+            'ds_email' : self.ds_email,
+            'ds_name' : self.ds_name,
+            'ds_password': self.ds_password,
+            'dt_creation' : str(self.dt_creation),
+            'dt_update' : str(self.dt_update),
+            'nm_user' : self.nm_user,
+            'nr_contact' : self.nr_contact
             }
 
     @classmethod

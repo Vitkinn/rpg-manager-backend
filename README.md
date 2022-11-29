@@ -10,5 +10,6 @@ pip install Flask_restful
 pip install Flask-SQLAlchemy
 pip install pymysql
 pip install flask_jwt_extended
+pip install cryptography
 cd../..
 python app.py
