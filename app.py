@@ -6,6 +6,7 @@ from flask_cors import CORS, cross_origin
 
 from resources.users import User, UserLogin
 from resources.tables import Table
+from resources.sheets import Sheet
 
 app = Flask(__name__)
 api = Api(app)
@@ -25,7 +26,8 @@ def create_database():
 
 api.add_resource(User, '/users/<int:id_user>')
 api.add_resource(UserLogin, '/login')
-api.add_resource(Table, '/table/<int:id_table>')
+api.add_resource(Table, '/tables/<int:id_table>')
+api.add_resource(Sheet, '/sheets/<int:id_sheet>')
 
 if __name__ == '__main__':
     from sql_alchemy import database
