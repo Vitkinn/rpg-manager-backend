@@ -24,6 +24,7 @@ class Table(Resource):
             return {'message' : 'Table deleted.'}
         return {'message' : 'Table not founded'}, 204
 
+    @jwt_required()
     def post(self, id_table):
         dados = minha_requisicao.parse_args()
 

@@ -28,6 +28,7 @@ class User(Resource):
             return {'message' : 'User deleted.'}
         return {'message' : 'User not founded'}, 204
 
+    @jwt_required()
     def post(self, id_user):
         dados = minha_requisicao.parse_args()
 
