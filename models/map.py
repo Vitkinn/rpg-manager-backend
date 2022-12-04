@@ -8,59 +8,58 @@ class MapModel (database.Model):
 
     __tablename__ = 'r_map'
     id_r_map = database.Column(database.Integer, primary_key = True)
-    table_id = database.Column(database.Integer, database.ForeignKey(TableModel.id_table), primary_key=True)
     ds_map_image = database.Column(database.String(255))
+    dt_upload = database.Column(database.Date)
+    table_id = database.Column(database.Integer, database.ForeignKey(TableModel.id_table), primary_key=True)
 
     table = database.relationship(TableModel, foreign_keys='MapModel.table_id')
 
-    def __init__(self, id_r_map):
+    def __init__(self, id_r_map, table_id, ds_map_image):
         self.id_r_map = id_r_map
+        self.ds_map_image = ds_map_image
+        self.dt_creation = date.today()
+        self.table_id = table_id
 
     def json(self):
         return {
-            'id_table' : self.id_table,
-            'nm_table' : self.nm_table,
-            'ds_table' : self.ds_table,
-            'r_map_id' : self.r_map_id,
-            #'user_id' : self.user_id,
-            #'character_id' : self.character_id
+            'id_r_map' : self.id_r_map,
+            'ds_map_image' : self.ds_map_image,
+            'dt_creation' : self.dt_creation,
+            'table_id' : self.table_id
             }
 
     @classmethod
-    def find_table_by_id(cls, id_table): 
-        table = cls.query.filter_by(id_table = id_table).first()
-        if table:
-            return table
+    def find_map_by_id(cls, id_r_map): 
+        map = cls.query.filter_by(id_r_map = id_r_map).first()
+        if map:
+            return map
         return None
 
     @classmethod
-    def find_table_by_login(cls, nm_table): 
-        table = cls.query.filter_by(nm_table = nm_table).first()
-        if table:
-            return table
+    def find_map_by_ds_map(cls, ds_map_image): 
+        map = cls.query.filter_by(ds_map_image = ds_map_image).first()
+        if ds_map_image:
+            return ds_map_image
         return None
 
-    def save_table(self): 
+    def save_map(self): 
         database.session.add(self)
         database.session.commit()
 
-    def update_table(self, id_table, user_id, character_id, r_map_id, nm_table, ds_table):
-        self.id_table = id_table
-        self.user_id = user_id
-        self.character_id = character_id
-        self.r_map_id = r_map_id
-        self.nm_table = nm_table
-        self.ds_table = ds_table
-        self.dt_update = date.today()
+    def update_map(self, id_r_map, table_id, ds_map_image):
+        self.id_r_map = id_r_map
+        self.ds_map_image = ds_map_image
+        self.dt_creation = date.today()
+        self.table_id = table_id
 
-    def delete_table(self):
+    def delete_map(self):
         database.session.delete(self)
         database.session.commit()
 
     @classmethod
-    def find_last_table(cls):
-        id_table = database.session.query(func.max(cls.id_table)).one()[0]
+    def find_last_map(cls):
+        id_r_map = database.session.query(func.max(cls.id_r_map)).one()[0]
 
-        if id_table:
-            return id_table + 1
+        if id_r_map:
+            return id_r_map + 1
         return 1

@@ -51,7 +51,6 @@ class UserLogin(Resource):
     def post(cls):
         dados = minha_requisicao.parse_args()
         user = UserModel.find_user_by_login(dados['nm_user'])
-
         if user and user.ds_password == dados['ds_password']:
             token_acesso = create_access_token(identity=user.id_user)
             return {'access_token': token_acesso}, 200

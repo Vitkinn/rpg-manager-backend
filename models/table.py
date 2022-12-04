@@ -19,7 +19,7 @@ class TableModel (database.Model):
     user = database.relationship(UserModel, foreign_keys='TableModel.user_id')
     sheet = database.relationship(SheetModel, foreign_keys='TableModel.sheet_id')
 
-    map = database.relationship('MapModel', backref='MapModel.id_r_map', primaryjoin='TableModel.id_table==MapModel.table_id', lazy='dynamic')
+    #map = database.relationship('MapModel', backref='MapModel.id_r_map', primaryjoin='TableModel.id_table==MapModel.table_id', lazy='dynamic')
     
     def __init__(self, id_table, user_id, nm_table, ds_table):
         self.id_table = id_table
@@ -37,8 +37,8 @@ class TableModel (database.Model):
             'nm_table' : self.nm_table,
             'ds_table' : self.ds_table,
             'r_map_id' : self.r_map_id,
-            #'user_id' : self.user_id,
-            #'character_id' : self.character_id
+            'user_id' : self.user_id,
+            'character_id' : self.character_id
             }
 
     @classmethod

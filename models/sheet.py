@@ -54,7 +54,8 @@ class SheetModel (database.Model):
         return {
             'id_sheet' : self.id_sheet,
             'ds_level_class' : self.ds_level_class,
-            'dt_update' : self.dt_update,
+            'dt_creation' : str(self.dt_creation),
+            'dt_update' : str(self.dt_update),
             'nm_antecedent' : self.nm_antecedent,
             'nm_character' : self.nm_character,
             'nm_race' : self.nm_race,
