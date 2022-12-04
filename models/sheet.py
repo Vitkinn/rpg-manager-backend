@@ -24,14 +24,15 @@ class SheetModel (database.Model):
     nr_inspiration = database.Column(database.Integer)
     nr_intelligence = database.Column(database.Integer)
     nr_wisdom = database.Column(database.Integer)
-
-    dt_creation = date.today()
+    
+    table = database.relationship('TableModel', backref='sheet_table', primaryjoin='SheetModel.id_sheet==TableModel.sheet_id', lazy='dynamic')
 
     def __init__(self, id_sheet, ds_level_class, nm_antecedent, nm_character, nm_race, nr_armor_class,
                  nr_bonus_proficiency, nr_charisma, nr_constitution, nr_dexterity, nr_displacement,
                  nr_experience, nr_force, nr_initiative, nr_inspiration, nr_intelligence, nr_wisdom):
         self.id_sheet = id_sheet
         self.ds_level_class = ds_level_class
+        self.dt_creation = date.today()
         self.dt_update = date.today()
         self.nm_antecedent = nm_antecedent
         self.nm_character = nm_character

@@ -39,15 +39,3 @@ class Sheet(Resource):
             return {'message':'An internal error ocurred.'}, 500
 
         return SheetModel.json(), 201
-
-"""class UserLogin(Resource):
-
-    @classmethod
-    def post(cls):
-        dados = minha_requisicao.parse_args()
-        user = SheetModel.find_userfind_sheet_by_nameby_login(dados['nm_character'])
-
-        if user and user.ds_password == dados['ds_password']:
-            token_acesso = create_access_token(identity=user.id_user)
-            return {'access_token': token_acesso}, 200
-        return {'message': 'User or password is not correct.'}"""

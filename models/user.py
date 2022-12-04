@@ -16,7 +16,7 @@ class UserModel (database.Model):
     nm_user = database.Column(database.String(50))
     nr_contact = database.Column(database.Integer)
 
-    friends = database.relationship('TableModel', backref='TableModel.id_table', primaryjoin='UserModel.id_user==TableModel.user_id', lazy='dynamic')
+    table = database.relationship('TableModel', backref='user_table', primaryjoin='UserModel.id_user==TableModel.user_id', lazy='dynamic')
 
     def __init__(self, id_user, ds_email, nm_user, ds_name,
                  ds_password, nr_contact):

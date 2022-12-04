@@ -2,34 +2,19 @@ from sql_alchemy import database
 from sqlalchemy.sql.expression import func
 from datetime import date
 
-from models.user import UserModel
-from models.sheet import SheetModel
+from models.table import TableModel
 
-class TableModel (database.Model):
+class MapModel (database.Model):
 
-    __tablename__ = 'r_table'
-    id_table = database.Column(database.Integer, primary_key = True)
-    user_id = database.Column(database.Integer, database.ForeignKey(UserModel.id_user), primary_key=True)
-    sheet_id = database.Column(database.Integer, database.ForeignKey(SheetModel.id_sheet), primary_key=True)
-    nm_table = database.Column(database.String(255))
-    ds_table = database.Column(database.String(255))
-    dt_creation = database.Column(database.Date)
-    dt_update = database.Column(database.Date)
-    
-    user = database.relationship(UserModel, foreign_keys='TableModel.user_id')
-    sheet = database.relationship(SheetModel, foreign_keys='TableModel.sheet_id')
+    __tablename__ = 'r_map'
+    id_r_map = database.Column(database.Integer, primary_key = True)
+    table_id = database.Column(database.Integer, database.ForeignKey(TableModel.id_table), primary_key=True)
+    ds_map_image = database.Column(database.String(255))
 
-    map = database.relationship('MapModel', backref='MapModel.id_r_map', primaryjoin='TableModel.id_table==MapModel.table_id', lazy='dynamic')
-    
-    def __init__(self, id_table, user_id, nm_table, ds_table):
-        self.id_table = id_table
-        self.dt_creation = date.today()
-        self.dt_update = date.today()
-        self.user_id = user_id
-        #self.character_id = character_id
-        #self.r_map_id = r_map_id
-        self.nm_table = nm_table
-        self.ds_table = ds_table
+    table = database.relationship(TableModel, foreign_keys='MapModel.table_id')
+
+    def __init__(self, id_r_map):
+        self.id_r_map = id_r_map
 
     def json(self):
         return {
