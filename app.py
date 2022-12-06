@@ -4,7 +4,8 @@ from flask_jwt_extended import JWTManager
 from flask_cors import CORS, cross_origin
 
 
-from resources.users import User, UserLogin
+from resources.users import User
+from resources.user_login import UserLogin
 from resources.tables import Table
 from resources.sheets import Sheet
 

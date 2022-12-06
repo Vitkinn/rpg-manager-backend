@@ -5,11 +5,13 @@ from flask_jwt_extended import create_access_token
 from models.user import UserModel
 
 minha_requisicao = reqparse.RequestParser()
-minha_requisicao.add_argument('nm_user', type=str, required=True, help="nm_user is required")
-minha_requisicao.add_argument('ds_email', type=str, required=True, help="ds_email is required")
-minha_requisicao.add_argument('ds_password', type=str, required=True, help="ds_password is required")
-minha_requisicao.add_argument('ds_name', type=str, required=True, help="ds_name is required")
+"""minha_requisicao.add_argument('nm_user', type=str, required=True, help="nm_user is required")
+minha_requisicao.add_argument('ds_password', type=str, required=True, help="ds_password is required")"""
 minha_requisicao.add_argument('nr_contact', type=str, required=True, help="nr_contact is required")
+minha_requisicao.add_argument('nm_user', type=str, required=True, help="nm_user is required")
+minha_requisicao.add_argument('ds_password', type=str, required=True, help="ds_password is required")
+minha_requisicao.add_argument('ds_email', type=str, required=True, help="ds_email is required")
+minha_requisicao.add_argument('ds_name', type=str, required=True, help="ds_name is required")
 
 class User(Resource):
 
@@ -28,7 +30,6 @@ class User(Resource):
             return {'message' : 'User deleted.'}
         return {'message' : 'User not founded'}, 204
 
-    @jwt_required()
     def post(self, id_user):
         dados = minha_requisicao.parse_args()
 
